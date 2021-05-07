@@ -1,0 +1,67 @@
+{
+  "name": "htld-theme",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Jon Shipman",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@wordpress/element": "^2.20.3",
+    "@wordpress/i18n": "^3.20.0",
+    "@wordpress/scripts": "^14.0.0",
+    "dir-archiver": "^1.1.1",
+    "node-sass": "^4.14.1",
+    "node-sass-package-importer": "^5.3.2",
+    "react-slideshow-image": "^3.4.6",
+    "react-stack-grid": "^0.7.1",
+    "rtlcss": "^2.5.0",
+    "tachyons": "^4.12.0"
+  },
+  "rtlcssConfig": {
+    "options": {
+      "autoRename": false,
+      "autoRenameStrict": false,
+      "blacklist": {},
+      "clean": true,
+      "greedy": false,
+      "processUrls": false,
+      "stringMap": []
+    },
+    "plugins": [],
+    "map": false
+  },
+  "scripts": {
+    "build:lightbox": "wp-scripts build ./js/lightbox/src/index.js --output-path=./js/lightbox/build",
+    "start:lightbox": "wp-scripts start ./js/lightbox/src/index.js --output-path=./js/lightbox/build",
+    "build:nav": "wp-scripts build ./js/navigation/src/index.js --output-path=./js/navigation/build",
+    "build:hero": "wp-scripts build ./js/hero/src/index.js --output-path=./js/hero/build",
+    "build:clients": "wp-scripts build ./js/clients/src/index.js --output-path=./js/clients/build",
+    "build:testimonials": "wp-scripts build ./js/testimonials/src/index.js --output-path=./js/testimonials/build",
+    "build:staff": "wp-scripts build ./js/staff/src/index.js --output-path=./js/staff/build",
+    "start:staff": "wp-scripts start ./js/staff/src/index.js --output-path=./js/staff/build",
+    "build:forms": "wp-scripts build ./js/forms/src/index.js --output-path=./js/forms/build",
+    "start:forms": "wp-scripts start ./js/forms/src/index.js --output-path=./js/forms/build",
+    "build:hcwhy": "wp-scripts build ./js/hcwhy/src/index.js --output-path=./js/hcwhy/build",
+    "start:hcwhy": "wp-scripts start ./js/hcwhy/src/index.js --output-path=./js/hcwhy/build",
+    "build:client-gallery": "wp-scripts build ./js/client-gallery/src/index.js --output-path=./js/client-gallery/build",
+    "start:client-gallery": "wp-scripts start ./js/client-gallery/src/index.js --output-path=./js/client-gallery/build",
+    "build:all": "yarn build:nav && yarn build:hero && yarn build:clients && yarn build:testimonials && yarn build:staff && yarn build:forms && yarn build:client-gallery && yarn build:hcwhy",
+    "watch": "node-sass sass/ -o ./ --source-map true --output-style expanded --indent-type tab --indent-width 1 -w",
+    "compile:css": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js sass/ -o ./ --output-style compressed",
+    "compile:css-dev": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js sass/ -o ./",
+    "compile:editor-css": "node-sass --importer node_modules/node-sass-package-importer/dist/cli.js sass/style-editor.scss -o ./ --output-style compressed",
+    "compile:rtl": "rtlcss style.css style-rtl.css",
+    "compile:sass": "yarn compile:css ; yarn compile:editor-css ; yarn compile:rtl",
+    "lint:scss": "wp-scripts lint-style 'sass/**/*.scss'",
+    "lint:js": "wp-scripts lint-js 'js/*.js'",
+    "bundle:parent": "dir-archiver --src . --dest ../htld-theme.zip --exclude .DS_Store .stylelintrc.json .eslintrc .git .gitattributes .github .gitignore composer.json composer.lock node_modules package-lock.json package.json .travis.yml phpcs.xml.dist sass style.css.map",
+    "bundle:child": "dir-archiver --src ../htld-child --dest ../htld-child.zip --exclude .DS_Store .gitignore README.md",
+    "bundle": "yarn compile:sass ; yarn build:all && composer install && yarn bundle:parent && yarn bundle:child"
+  },
+  "resolutions": {
+    "chokidar": "^3.4.0"
+  },
+  "dependencies": {
+    "animate.css": "^4.1.1",
+    "htld-lightbox": "file:./js/lightbox/build"
+  }
+}
